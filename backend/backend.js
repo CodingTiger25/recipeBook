@@ -1,1 +1,6 @@
-<h1>Testing</h1>
+const express = require('express');
+const app = express();
+
+app.listen(3000, ( )=> {
+    console.log("Listening on 3000 for the first time")
+})

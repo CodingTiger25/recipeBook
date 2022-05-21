@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
+import {Link, useNavigate} from 'react-router-dom';
+
 
 const Button = styled.button`
     background-color: black;
@@ -8,7 +10,13 @@ const Button = styled.button`
     display:block;
     margin: 0 auto;
 ;`
+
+
+
+
+
 function  HomePage(){
+    const navigate = useNavigate(); 
     return(
         <div>
 
@@ -17,7 +25,7 @@ function  HomePage(){
             </div>
                 
             <div>
-                <Button>Recipes</Button>
+                <Button onClick={navigate('/main')}>Recipes</Button>
             </div>
         </div>
     )

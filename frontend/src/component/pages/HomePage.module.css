@@ -1,0 +1,25 @@
+
+
+.recipe {
+    color: blue;
+    text-align: center;
+    font-size: 3rem;
+    text-decoration-line: underline;
+  }
+  
+.recipeButton {
+    color: blue;
+    text-align: center;
+  }
+
+.link { 
+    text-decoration: none;
+    text-align: center;
+    font-size: 5rem;
+    color: black;
+}
+
+.centered {
+    display: flex;
+    justify-content: center;
+}

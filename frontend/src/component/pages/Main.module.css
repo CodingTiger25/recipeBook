@@ -5,3 +5,13 @@
     text-align: center;
     text-decoration: underline;
 }
+
+.navCen{
+    text-align:right;
+    background-color: aquamarine;
+}
+.navs{
+    font-size: 5rem;
+    text-decoration: none;
+    
+}

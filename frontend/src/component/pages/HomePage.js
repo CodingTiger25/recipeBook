@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
 import {Link, useNavigate} from 'react-router-dom';
+import classes from './HomePage.module.css';
 
 
 const Button = styled.button`
@@ -20,12 +21,12 @@ function  HomePage(){
     return(
         <div>
 
-            <div id="recipe">
+            <div className={classes.recipe}>
                 <h1>Recipe Book</h1>
             </div>
                 
-            <div>
-                <Button onClick={navigate('/main')}>Recipes</Button>
+            <div className={classes.centered}>
+                <Link className={classes.link} to='main'>Recipes</Link>
             </div>
         </div>
     )

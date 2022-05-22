@@ -1,14 +1,4 @@
-#recipe {
-  color: blue;
-  text-align: center;
-  font-size: 3rem;
-  text-decoration-line: underline;
-}
 
-#recipeButton {
-  color: blue;
-  text-align: center;
-}
 
 body {
   margin: 0;

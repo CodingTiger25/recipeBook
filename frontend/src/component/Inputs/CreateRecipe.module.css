@@ -1,0 +1,36 @@
+.create{
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.title{
+    text-align: center;
+    text-decoration: dotted;
+    color: blueviolet;
+    font-size: 6rem;
+}
+
+.recipeName{
+    text-align: left;
+    display: block;
+}
+
+.recipeIngredient{
+    width: 100%;
+    padding: 6px 10px;
+    margin: 10px  0;
+    border: 1px solid black;
+    box-sizing: border-box;
+}
+
+.addBtn{
+    background-color: darkgoldenrod;
+    border:none;
+    color:white;
+    padding:15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+}

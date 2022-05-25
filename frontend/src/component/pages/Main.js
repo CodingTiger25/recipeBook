@@ -1,16 +1,18 @@
 import React from 'react';
-import styled from "styled-components";
 import classes from './Main.module.css';
 import { NavLink, Nav} from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+
+
 
 function Main(){
 
     return (
         <div>
             <div className={classes.navCen}>
-                <Nav className={classes.navs} onSelect={(select) => alert(`${select}`)}>
+                <Nav className={classes.navs}>
                     <Nav.Item>
-                        <Nav.Link eventKey="Adding recipe">Add Recipe</Nav.Link>
+                        <Link to='/create'>Add Recipe</Link>
                     </Nav.Item>
                     <Nav.Item>
                         <Nav.Link eventKey="Removing recipe">Remove Recipe</Nav.Link>

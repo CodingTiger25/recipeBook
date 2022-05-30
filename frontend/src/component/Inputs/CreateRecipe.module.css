@@ -34,3 +34,12 @@
     display: inline-block;
     font-size: 20px;
 }
+
+.submit{
+    background-color: aqua;
+    text-decoration: none;
+    padding: 15px 32px;
+    text-align: center;
+    display: inline-block;
+    position: fixed;
+}

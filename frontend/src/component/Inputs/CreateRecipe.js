@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import classes from "./CreateRecipe.module.css";
+import { Link } from 'react-router-dom';
 
 function CreateRecipe()
 {
@@ -36,19 +37,24 @@ function CreateRecipe()
                         <div key = {index}>  
                             <div>
                                 <input className={classes.recipeIngredient}
-                                        type='text'/>                            
-                                <button className={classes.addBtn} onClick={handleInputAdd}>Add</button>
+                                        type='text'></input>
+                                {inputList.length - 1 === index &&(                           
+                                <button className={classes.addBtn} 
+                                    onClick={handleInputAdd}>Add an ingredient</button>
+                                )}    
                             </div>
+
                             <div> 
-                                {inputList.length > 0 && (
+                                {inputList.length > 1 && (
                                     <button className={classes.addBtn} 
-                                    onClick={() => handleInputRemove(index)}> <span>Remove</span></button>
+                                    onClick={() => handleInputRemove(index)}> <span>Remove an ingredient</span></button>
                                 )}
-                                    
-                                
                             </div>                           
                         </div>      
-                ))}          
+                ))} 
+                <div>
+                    <Link className={classes.submit} to='/main'>Submit</Link>
+                </div>         
             </form>
         </div>
     );

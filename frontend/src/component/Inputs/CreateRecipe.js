@@ -1,59 +1,83 @@
 import React, {useState} from "react";
 import classes from "./CreateRecipe.module.css";
 import { Link } from 'react-router-dom';
+import {v4 as uuidv4} from 'uuid';
+import IconButton from '@mui/material/IconButton';
+import RemoveIcon from '@mui/icons-material/Remove';
+import AddButton from '@mui/icons-material/Add';
+import TextField from '@mui/material/TextField';
+
+
 
 function CreateRecipe()
 {
-    const [inputList, setInputList] = 
-    useState([{ingredient:''}]);
+    const [name, setName] = useState(' ');
+    const [inputList, setInputList] = useState([{id: uuidv4(), ingredient:' '}]);
 
     //Handles Add button functionality
     const handleInputAdd = () => {
-        setInputList([...inputList,{ingredient:""}]);
+        setInputList([...inputList,{id:uuidv4() ,ingredient:' '}]);
     };
 
-    const handleInputRemove = (index) => {
+    const handleInputRemove = (id) => {
         const list = [...inputList];
-        list.splice(index,1);
+        list.splice(list.findIndex(value => value.id === id), 1);
         setInputList(list);
     }
- 
-    return (
 
+    const handleChange = (id, event) => {
+        const newInput = inputList.map(i => {
+            if(id === i.id){
+                i[event.target.name] = event.target.value
+            }
+            return i;
+        })
+
+        setInputList(newInput);
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log("Reecipe Name: ",name);
+        console.log("Ingredients: ", inputList);
+        setName(" ");
+        setInputList("");
+        alert(`Your recipe ${name} has been created!!!`);
+        window.location.replace("http://localhost:3000/main");
+        
+    }
+
+    return (
         <div className={classes.create}>
             <h2 className={classes.title}>CREATE THE RECIPE!</h2>
-            <form>
+            <form onSubmit={handleSubmit} action="/main" method="POST">
                 <label className={classes.recipeName}>
                     Recipe Name:
                     <input className={classes.recipeIngredient}
-                        type='text'
-                        
+                        type='text' 
+                        onChange={(e) => setName(e.target.value)}
+                        value={name}
                     />                 
                 </label>
                 <label className={classes.recipeName}>
                     Ingredient:   
                 </label>
-                {inputList.map((newIng,index) => (
-                        <div key = {index}>  
-                            <div>
-                                <input className={classes.recipeIngredient}
-                                        type='text'></input>
-                                {inputList.length - 1 === index &&(                           
-                                <button className={classes.addBtn} 
-                                    onClick={handleInputAdd}>Add an ingredient</button>
-                                )}    
-                            </div>
-
-                            <div> 
-                                {inputList.length > 1 && (
-                                    <button className={classes.addBtn} 
-                                    onClick={() => handleInputRemove(index)}> <span>Remove an ingredient</span></button>
-                                )}
-                            </div>                           
-                        </div>      
-                ))} 
+                {inputList.map( inputList => (
+                    <div key={inputList.id}>
+                           <TextField name="ingredient"
+                                      value={inputList.ingredient}
+                                      onChange={(e) => {handleChange(inputList.id,e)}}>
+                           </TextField>
+                            <IconButton disabled={inputList.length === 1} onClick={() => handleInputRemove(inputList.id)}>
+                                <RemoveIcon/>
+                            </IconButton>
+                            <IconButton onClick={handleInputAdd}>
+                                <AddButton></AddButton>
+                            </IconButton>
+                    </div>
+                ))}
                 <div>
-                    <Link className={classes.submit} to='/main'>Submit</Link>
+                      <button className={classes.submit}>Submit</button>
                 </div>         
             </form>
         </div>

@@ -46,7 +46,10 @@ function CreateRecipe()
         }
         
         axios.post('http://http://localhost:3000/#/create', newRecipe)
-            .then(res => console.log("Axios post"));
+            .then(res => console.log("Axios post"))
+            .catch((err)=> {
+                console.log("Error")
+            });
 
         setName(" ");
         setInputList("");

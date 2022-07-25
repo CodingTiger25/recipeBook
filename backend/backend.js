@@ -10,24 +10,37 @@ mongoose.connect('mongodb://localhost:27017/recipeBook',{}
 
 app.use(express.urlencoded({extended:true}))
 
-app.post('/main', async (req,res) => {
-    const newRecipe = new RecipeList(req.body);
-    await newRecipe.save()
-    console.log(newRecipe);
-    res.send('A recipe is born!!!');
+app.post('/create', async (req,res) => {
+    const newRecipe = new RecipeList({
+        name: req.body.name,
+        ingredient: req.body.ingredient
+    })
+   
+    newRecipe.save()
+        .then(newRecipe =>{
+            console.log(newRecipe);
+            console.log("Saved recipe");
+        })
+
+    console.log("End of post");
 })
 
+
+
  app.get('/main', async (req,res) => {
-    const recipes = await RecipeList.find({});
+    const recipes = await RecipeList.find();
     res.send('A recipe');
-    console.log(recipes);
+    console.log("From submit!!!");
+    
+    
+
 })
 
 app.get('/main/:id', async (req,res) => {
     const {id} = req.params;
     const recipe = await RecipeList.findById(id);
     res.send(recipe);
-    console.log(recipe);
+    console.log("Frome get");
 }) 
 
 app.get('/create', async(req,res) => {

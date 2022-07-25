@@ -6,14 +6,15 @@ import IconButton from '@mui/material/IconButton';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddButton from '@mui/icons-material/Add';
 import TextField from '@mui/material/TextField';
+import axios from 'axios';
 
 
 
 function CreateRecipe()
 {
-    const [name, setName] = useState(' ');
+    const [name, setName] = useState([]);
     const [inputList, setInputList] = useState([{id: uuidv4(), ingredient:' '}]);
-
+    
     //Handles Add button functionality
     const handleInputAdd = () => {
         setInputList([...inputList,{id:uuidv4() ,ingredient:' '}]);
@@ -38,8 +39,15 @@ function CreateRecipe()
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("Reecipe Name: ",name);
-        console.log("Ingredients: ", inputList);
+
+        const newRecipe = {
+            name: name,
+            ingredient: inputList
+        }
+        
+        axios.post('http://http://localhost:3000/#/create', newRecipe)
+            .then(res => console.log("Axios post"));
+
         setName(" ");
         setInputList("");
         alert(`Your recipe ${name} has been created!!!`);
@@ -62,7 +70,7 @@ function CreateRecipe()
                 <label className={classes.recipeName}>
                     Ingredient:   
                 </label>
-                {inputList.map( inputList => (
+                {Array(inputList).map( inputList => (
                     <div key={inputList.id}>
                            <TextField name="ingredient"
                                       value={inputList.ingredient}

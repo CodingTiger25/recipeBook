@@ -10,19 +10,28 @@ mongoose.connect('mongodb://localhost:27017/recipeBook',{}
 
 app.use(express.urlencoded({extended:true}))
 
+var bodyPars = require('body-parser');
+app.use(bodyPars.json());
+
 app.post('/create', async (req,res) => {
-    const newRecipe = new RecipeList({
+    
+    
+    const newRecipe = await new RecipeList({
+        
         name: req.body.name,
         ingredient: req.body.ingredient
     })
    
+    
     newRecipe.save()
         .then(newRecipe =>{
+            console.log('The name', req.body.name);
+            console.log('The ingredient', req.body.ingredient);
             console.log(newRecipe);
             console.log("Saved recipe");
         })
 
-    console.log("End of post");
+    
 })
 
 

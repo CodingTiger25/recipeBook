@@ -45,7 +45,7 @@ function CreateRecipe()
             ingredient: inputList
         }
         
-        axios.post('http://http://localhost:3000/#/create', newRecipe)
+        axios.post('http://localhost:3000/#/create', newRecipe)
             .then(res => console.log("Axios post"))
             .catch((err)=> {
                 console.log("Error")

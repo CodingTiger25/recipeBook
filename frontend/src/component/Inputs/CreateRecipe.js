@@ -1,26 +1,36 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import classes from "./CreateRecipe.module.css";
 import IconButton from '@mui/material/IconButton';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddButton from '@mui/icons-material/Add';
 import TextField from '@mui/material/TextField';
 import axios from 'axios';
+import uuid from "react-uuid";
+import { ListItemSecondaryAction } from "@mui/material";
 
 
 
 function CreateRecipe()
 {
     const [name, setName] = useState([]);
-    const [inputList, setInputList] = useState([{ingredient:' '}]);
+    //const [inputList, setInputList] = useState([{ingredient:' '}]);
+    const [inputList, setInputList] = useState(['']);
+    const [items, setItems] = useState([]);
+
+    const list = [...items];
     
     //Handles Add button functionality
     const handleInputAdd = () => {
 
-        let object = {
+        /*let object = {
             ingredient: ''
-        }
+        }*/
 
-        setInputList([...inputList,object]);
+        const object = [...inputList,['']]
+
+        //setInputList([...inputList,object]);
+
+        setInputList(object);
     };
 
     const handleInputRemove = (index) => {
@@ -31,34 +41,43 @@ function CreateRecipe()
 
     const handleChange = (event, index) => {
         let data = [...inputList];
-        data[index].ingredient = event.target.value;
+        //data[index].ingredient = event.target.value;
+        data[index] = event.target.value;
         setInputList(data);
-
-        /*setInputList((prev) => {
-         return prev.map((item,i) => {
-                if(i !== index) {
-                    return item;
-                }
-
-            return{
-                ...item,
-                [event.target.ingredient]: event.target.value,
-            };    
-            });
-        });*/
-
-
-
     };
+
+    
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(name);
-        console.log(inputList);
+        /*console.log(name);
+        console.log(inputList);*/
+
+        console.log("The ingredients: ", inputList)
+        for(var i in inputList)
+        {
+            console.log("Looping the inputlist");
+            console.log(inputList[i]);
+
+            const newIngredients = {
+                _id: uuid(),
+                value: inputList[i]
+            }
+
+            list.push(newIngredients);
+            //setItems([...items,newIngredients]);
+            console.log('The LIST: ', list[i]);
+        }
+        
+
+        console.log('The FULL LIST: ', list);
+        setItems(list);
+        console.log('This is the items: ', items);
 
         const newRecipe = {
             name: name,
-            ingredient: inputList
+            
+            ingredient: list
         }
         
         axios.post('http://localhost:3000/create', newRecipe)
@@ -90,8 +109,8 @@ function CreateRecipe()
                 {inputList.map( (form, index) => {
                     return (
                     <div key={index}>
-                           <TextField name="ingredient"     
-                                      value={inputList.ingredient}                             
+                           <TextField //name="ingredient"     
+                                      value={/*inputList.ingredient*/form}                             
                                       onChange={(e) => {handleChange(e, index)}}>
                                       
                            </TextField>

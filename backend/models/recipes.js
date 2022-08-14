@@ -1,15 +1,19 @@
 const mongoose = require('mongoose');
 
 
+
 const recipeSchema = new mongoose.Schema({
     name: String,
 
-    ingredient: [{String}],
+    ingredient: Object
 
 
 })
 
-const Recipe = mongoose.model('Recipe', recipeSchema);
+
+
+
+const Recipe = mongoose.model('Recipe', recipeSchema,'recipes');
 
 
 

@@ -21,6 +21,7 @@
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "react-textfield": "^0.0.6",
+    "react-uuid": "^1.0.2",
     "route": "^0.2.5",
     "routes": "^2.1.0",
     "styled-components": "^5.3.5",

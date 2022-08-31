@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import classes from "./CreateRecipe.module.css";
 import IconButton from '@mui/material/IconButton';
 import RemoveIcon from '@mui/icons-material/Remove';
@@ -6,7 +6,7 @@ import AddButton from '@mui/icons-material/Add';
 import TextField from '@mui/material/TextField';
 import axios from 'axios';
 import uuid from "react-uuid";
-import { ListItemSecondaryAction } from "@mui/material";
+
 
 
 
@@ -17,19 +17,15 @@ function CreateRecipe()
     const [inputList, setInputList] = useState(['']);
     const [items, setItems] = useState([]);
 
+    const [directions, setDirections] = useState(['']);
+    const [theDirections, setTheDirections] = useState([]);
+
     const list = [...items];
+    const steps = [...theDirections];
     
     //Handles Add button functionality
     const handleInputAdd = () => {
-
-        /*let object = {
-            ingredient: ''
-        }*/
-
         const object = [...inputList,['']]
-
-        //setInputList([...inputList,object]);
-
         setInputList(object);
     };
 
@@ -46,38 +42,56 @@ function CreateRecipe()
         setInputList(data);
     };
 
-    
+    // Functions for directions input
+    const handleDirectionAdd = () => {
+        const object = [...directions,['']]
+        setDirections(object);
+    };
 
+    const handleDirectionRemove = (index) => {
+        const list = [...directions];
+        list.splice(index,1);
+        setDirections(list);
+    }
+
+    const handleDChange = (event, index) => {
+        let data = [...directions];
+        //data[index].ingredient = event.target.value;
+        data[index] = event.target.value;
+        setDirections(data);
+    };
+
+    
     const handleSubmit = (e) => {
         e.preventDefault();
-        /*console.log(name);
-        console.log(inputList);*/
 
-        console.log("The ingredients: ", inputList)
+        //Setting the ingredients
         for(var i in inputList)
         {
-            console.log("Looping the inputlist");
-            console.log(inputList[i]);
-
             const newIngredients = {
                 _id: uuid(),
                 value: inputList[i]
             }
-
-            list.push(newIngredients);
-            //setItems([...items,newIngredients]);
-            console.log('The LIST: ', list[i]);
+            list.push(newIngredients);          
         }
-        
-
-        console.log('The FULL LIST: ', list);
         setItems(list);
-        console.log('This is the items: ', items);
+
+        //Setting the directions
+        for(var j in directions)
+        {
+            const newDirections = {
+                _id: uuid(),
+                value: directions[j]
+            }
+            steps.push(newDirections);          
+        }
+
+        setTheDirections(steps);
 
         const newRecipe = {
-            name: name,
-            
-            ingredient: list
+            name: name,          
+            ingredient: list,
+            directions: steps
         }
         
         axios.post('http://localhost:3000/create', newRecipe)
@@ -109,8 +123,8 @@ function CreateRecipe()
                 {inputList.map( (form, index) => {
                     return (
                     <div key={index}>
-                           <TextField //name="ingredient"     
-                                      value={/*inputList.ingredient*/form}                             
+                           <TextField    
+                                      value={form}                             
                                       onChange={(e) => {handleChange(e, index)}}>
                                       
                            </TextField>
@@ -120,8 +134,32 @@ function CreateRecipe()
                             <IconButton onClick={handleInputAdd}>
                                 <AddButton></AddButton>
                             </IconButton>
+
+                            
                     </div>
                 )})}
+
+                <label className={classes.recipeName}>
+                    Directions: 
+                </label>
+                
+                {directions.map( (f,i) => {
+                    return (
+                        <div key={i}>
+                           <TextField    
+                                      value={f}                             
+                                      onChange={(e) => {handleDChange(e, i)}}>
+                                      
+                           </TextField>
+                            <IconButton disabled={directions.length === 1} onClick={() => handleDirectionRemove(directions.id)}>
+                                <RemoveIcon/>
+                            </IconButton>
+                            <IconButton onClick={handleDirectionAdd}>
+                                <AddButton></AddButton>
+                            </IconButton>
+                    </div>          
+                )})}
+
                 <div>
                       <button className={classes.submit}>Submit</button>
                 </div>         

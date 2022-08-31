@@ -28,9 +28,12 @@ app.use(function (req, res, next) {
 app.post('/create', async (req,res) => {
     
     console.log('The name', req.body.name);
-    console.log('The ingredient', req.body.ingredient)
+    console.log('The ingredient', req.body.ingredient);
+    console.log('The steps: ', req.body.directions);
 
     const data = req.body.ingredient;
+
+    const steps = req.body.directions;
 
     
 
@@ -47,25 +50,12 @@ app.post('/create', async (req,res) => {
    // newIngredient.items = JSON.stringify(data); //JSON.stringify(data,null, 2);
 
     newRecipe.name = req.body.name;
-    newRecipe.ingredient = data;  //JSON.stringify(data,null, 2);
-    
-   
-    
-                    
+    newRecipe.ingredient = data;  
+    newRecipe.directions = steps;
 
 
         newRecipe.save()
         .then(newRecipe =>{
-          
-
-            //console.log('The parsed: ', JSON.parse(newRecipe.ingredient));
-           /* console.log('The name', req.body.name);
-              console.log('The ingredient', req.body.ingredient);
-          
-            console.log(newRecipe);
-            console.log("Saved recipe");*/
-            //console.log('ingredient schema',newIngredient);
-
             console.log(newRecipe);
         })
 
@@ -75,14 +65,18 @@ app.post('/create', async (req,res) => {
 
 
  app.get('/main', async (req,res) => {
-    const recipes = await RecipeList.find();
-    res.send('from main');
-    
-    console.log("From submit!!!");
-    
-    
+   /* const recipes = await RecipeList.find({});
+    res.send(recipes);*/
+    const recipes = await RecipeList.find({});
 
-})
+    /*const recMap = {};
+    recipes.forEach((ing) => {
+        recMap[ing._id] = ing;
+    });*/
+
+    res.send(recipes);
+
+});
 
 app.get('/main/:id', async (req,res) => {
     const {id} = req.params;

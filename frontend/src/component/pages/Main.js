@@ -8,43 +8,39 @@ import axios from 'axios';
 
  function Main(){
 
-    const url = 'http://localhost:3000/main/62fa13de63acff90fc88ef1b';
+    const url = 'http://localhost:3000/main';
     const [foodRecipe, setFoodRecipe] = useState([]);
-
 
     useEffect(() => {
         axios.get(url).then(res => {
-            setFoodRecipe((res.data));
-           
-            //console.log(foodRecipe)
+            const items = res.data;
+            setFoodRecipe((items));   
+            console.log(items);       
         })
     }, [])
 
-    let items =  foodRecipe.ingredient;
+    //let items =  foodRecipe.ingredient;
     
-    
-    //const lineItem = JSON.parse(items);
-    /*const listItems = JSON.parse(items);*/
-    //JSON.parse(items);
+    function displayItems(list) {
 
-    console.log(items)
+            return list.map((d) => (
+                <div key={d._id}>
+                    <h2>{d.name}</h2>
+                    <h5>Ingredients</h5>
+                    <ul> {d.ingredient.map((y) =><li>{y.value}</li> )}</ul>
+                    <h7 className={classes.directions}>Directions</h7>
+                    <ol>{d.directions.map((u) => <li>{u.value}</li>)}</ol>
+                </div>
+            ));
 
-
-   // const list = JSON.parse(JSON.stringify(items));
-
-   // console.log(list);
- 
-    console.log(Array.isArray(items));
-    //console.log(JSON.parse(items));
-
- 
-
+    };   
     
 
         return (
             <div>
                 <div className={classes.navCen}>
                     <Nav className={classes.navs}>
+                        <h1 className={classes.header}>Your Recipes</h1>
                         <Nav.Item>
                             <Link to='/create'>Add Recipe</Link>
                         </Nav.Item>
@@ -54,24 +50,13 @@ import axios from 'axios';
                     </Nav>
                 </div>
                     
-                <div>
-                    <h1 className={classes.header}>Recipes are here</h1>
-                    <p> {foodRecipe.name}</p>
+                <div className={classes.foodIng}>
                     <div>
-                        <ul>     
-                            {items && items.map((d) => {
-                                return (
-                                  <li key = {d._id}>{d.value}</li>  
-                                );
-                            })}                  
-                        </ul>
-                    </div>
-                
-                </div>
-                
+                        {displayItems(foodRecipe)}
+                    </div>             
+                </div>          
             </div>
-            
-            
+                      
         )
 }
 

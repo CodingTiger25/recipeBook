@@ -7,7 +7,9 @@ const recipeSchema = new mongoose.Schema({
 
     ingredient: Object,
 
-    directions: Object
+    directions: Object,
+
+    recipeImage: String,
 
 
 })

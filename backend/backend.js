@@ -4,6 +4,19 @@ const path = require('path');
 const mongoose = require('mongoose');
 const RecipeList = require('./models/recipes');
 const IngredientList = require('./models/ingredient');
+const multer = require('multer');
+
+const absPath = path.join(__dirname, './images');
+const imageStore = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, absPath)
+    },
+    filename: (req, file, cb) => {
+        cb(null,file.originalname);
+    },
+})
+
+const upload = multer({storage: imageStore});
 
 mongoose.connect('mongodb://localhost:27017/recipeBook',{}
 ).then(() => {console.log("Mongo connect!")})
@@ -25,7 +38,9 @@ app.use(function (req, res, next) {
     next();
     });
 
-app.post('/create', async (req,res) => {
+
+//Request add new recipe
+app.post('/create', upload.single('recipeImage'), async (req,res) => {
     
     console.log('The name', req.body.name);
     console.log('The ingredient', req.body.ingredient);
@@ -35,23 +50,14 @@ app.post('/create', async (req,res) => {
 
     const steps = req.body.directions;
 
-    
+    const foodPic = req.file.originalname;
 
-    /*const newRecipe =  new RecipeList({
-        
-        name: req.body.name,
-        
-       ingredient: JSON.stringify(data)
-        })*/
-
-    //const newIngredient = new IngredientList();
     const newRecipe = new RecipeList();
-
-   // newIngredient.items = JSON.stringify(data); //JSON.stringify(data,null, 2);
 
     newRecipe.name = req.body.name;
     newRecipe.ingredient = data;  
     newRecipe.directions = steps;
+    newRecipe.recipeImage = foodPic;
 
 
         newRecipe.save()

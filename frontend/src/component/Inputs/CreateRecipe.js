@@ -13,12 +13,11 @@ import uuid from "react-uuid";
 function CreateRecipe()
 {
     const [name, setName] = useState([]);
-    //const [inputList, setInputList] = useState([{ingredient:' '}]);
     const [inputList, setInputList] = useState(['']);
     const [items, setItems] = useState([]);
-
     const [directions, setDirections] = useState(['']);
     const [theDirections, setTheDirections] = useState([]);
+    const [fileData, setFileData] = useState();
 
     const list = [...items];
     const steps = [...theDirections];
@@ -37,7 +36,6 @@ function CreateRecipe()
 
     const handleChange = (event, index) => {
         let data = [...inputList];
-        //data[index].ingredient = event.target.value;
         data[index] = event.target.value;
         setInputList(data);
     };
@@ -56,10 +54,14 @@ function CreateRecipe()
 
     const handleDChange = (event, index) => {
         let data = [...directions];
-        //data[index].ingredient = event.target.value;
         data[index] = event.target.value;
         setDirections(data);
     };
+
+    //Function for image adding
+    const onChangeFile = e => {
+        setFileData(e.target.files[0]);
+    }
 
     
     const handleSubmit = (e) => {
@@ -88,13 +90,21 @@ function CreateRecipe()
 
         setTheDirections(steps);
 
-        const newRecipe = {
+
+        const formData = new FormData();
+
+        formData.append("name",name);
+        formData.append("ingredient",JSON.stringify(list));
+        formData.append("directions",JSON.stringify(steps));
+        formData.append("recipeImage",fileData);
+
+        /*const newRecipe = {
             name: name,          
             ingredient: list,
             directions: steps
-        }
+        }*/
         
-        axios.post('http://localhost:3000/create', newRecipe)
+        axios.post('http://localhost:3000/create', /*newRecipe*/formData)
             .then(res => console.log("Axios post"))
             .catch((err)=> {
                 console.log("Error")
@@ -108,7 +118,7 @@ function CreateRecipe()
     return (
         <div className={classes.create}>
             <h2 className={classes.title}>CREATE THE RECIPE!</h2>
-            <form onSubmit={handleSubmit} action="/main" method="POST">
+            <form onSubmit={handleSubmit} action="/main" method="POST" encType="multipart/form-data">
                 <label className={classes.recipeName}>
                     Recipe Name:
                     <input className={classes.recipeIngredient}
@@ -159,6 +169,12 @@ function CreateRecipe()
                             </IconButton>
                     </div>          
                 )})}
+                <div>
+                    <label>
+                        Picture for your recipe
+                    </label>
+                    <input type="file" filename="recipeImage" onChange={onChangeFile}></input>
+                </div>
 
                 <div>
                       <button className={classes.submit}>Submit</button>

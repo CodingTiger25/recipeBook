@@ -6,6 +6,7 @@ import axios from 'axios';
 
 
 
+
  function Main(){
 
     const url = 'http://localhost:3000/main';
@@ -20,16 +21,20 @@ import axios from 'axios';
     }, [])
 
     //let items =  foodRecipe.ingredient;
+
     
     function displayItems(list) {
 
-            return list.map((d) => (
+
+ 
+            return list.map((d)  => (
                 <div key={d._id}>
                     <h2>{d.name}</h2>
                     <h5>Ingredients</h5>
-                    <ul> {d.ingredient.map((y) =><li>{y.value}</li> )}</ul>
+                    <ul> {d.ingredient.map((y) =>(<li>{y.value}</li> ))}</ul>
                     <h7 className={classes.directions}>Directions</h7>
                     <ol>{d.directions.map((u) => <li>{u.value}</li>)}</ol>
+                    <img src={`./RecipeImages/${d.recipeImage}`}/>
                 </div>
             ));
 

@@ -6,10 +6,10 @@ const RecipeList = require('./models/recipes');
 const IngredientList = require('./models/ingredient');
 const multer = require('multer');
 
-const absPath = path.join(__dirname, './images');
+const absPath = path.join(__dirname, './frontend/public/RecipeImages');
 const imageStore = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, absPath)
+        cb(null, '../frontend/public/RecipeImages')
     },
     filename: (req, file, cb) => {
         cb(null,file.originalname);
@@ -46,13 +46,15 @@ app.post('/create', upload.single('recipeImage'), async (req,res) => {
     console.log('The ingredient', req.body.ingredient);
     console.log('The steps: ', req.body.directions);
 
-    const data = req.body.ingredient;
+    var data = JSON.parse(req.body.ingredient);
 
-    const steps = req.body.directions;
+    var steps = JSON.parse(req.body.directions);
 
-    const foodPic = req.file.originalname;
+    var foodPic =  req.file.originalname;
 
     const newRecipe = new RecipeList();
+
+    console.log("From post", data, " Steps: ", steps);
 
     newRecipe.name = req.body.name;
     newRecipe.ingredient = data;  

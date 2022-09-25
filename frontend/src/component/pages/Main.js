@@ -20,9 +20,15 @@ import axios from 'axios';
         })
     }, [])
 
-    //let items =  foodRecipe.ingredient;
+    const deleteRecipe = (id) => {
+       
+        axios.delete(`http://localhost:3000/main/${id}`)
+        .then(
+            res => console.log("Deleted", res))
+            .catch(err => console.log(err));
 
-    
+    }
+
     function displayItems(list) {
 
 
@@ -35,6 +41,7 @@ import axios from 'axios';
                     <h7 className={classes.directions}>Directions</h7>
                     <ol>{d.directions.map((u) => <li>{u.value}</li>)}</ol>
                     <img src={`./RecipeImages/${d.recipeImage}`}/>
+                    <button onClick={deleteRecipe(d._id)}>Delete</button>
                 </div>
             ));
 

@@ -22,13 +22,7 @@ mongoose.connect('mongodb://localhost:27017/recipeBook',{}
 ).then(() => {console.log("Mongo connect!")})
  .catch(err => {console.log("No mongo here!")})
 
-//app.use(express.urlencoded({extended:false}))
-
 app.use(express.json())
-
-/*var bodyPars = require('body-parser');
-const { json } = require('express');
-app.use(bodyPars.json());*/
 
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -61,38 +55,38 @@ app.post('/create', upload.single('recipeImage'), async (req,res) => {
     newRecipe.directions = steps;
     newRecipe.recipeImage = foodPic;
 
-
         newRecipe.save()
         .then(newRecipe =>{
             console.log(newRecipe);
-        })
-
-    
+        }) 
 })
 
 
 
+
+
  app.get('/main', async (req,res) => {
-   /* const recipes = await RecipeList.find({});
-    res.send(recipes);*/
     const recipes = await RecipeList.find({});
-
-    /*const recMap = {};
-    recipes.forEach((ing) => {
-        recMap[ing._id] = ing;
-    });*/
-
     res.send(recipes);
-
 });
 
 app.get('/main/:id', async (req,res) => {
     const {id} = req.params;
     const recipe = await RecipeList.findById(id);
-    res.send(recipe);
-    
-    
+    res.send(recipe);     
 }) 
+
+app.delete(`/main/:id`, async (req,res) => {
+    const {id} = req.params;
+
+    
+        RecipeList.remove({_id:(req.params.id)})
+        .then(result => {res.status(200).json(result)})
+        .catch(err => {
+            res.status(500).json({error: 'Could not delete recipe'})
+        })
+    
+})
 
 app.get('/create', async(req,res) => {
     res.send('The main page!!!');

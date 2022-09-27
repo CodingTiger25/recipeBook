@@ -67,7 +67,7 @@ app.post('/create', upload.single('recipeImage'), async (req,res) => {
 
  app.get('/main', async (req,res) => {
     const recipes = await RecipeList.find({});
-    res.send(recipes);
+    //res.send(recipes);
 });
 
 app.get('/main/:id', async (req,res) => {

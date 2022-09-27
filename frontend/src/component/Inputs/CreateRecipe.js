@@ -6,6 +6,7 @@ import AddButton from '@mui/icons-material/Add';
 import TextField from '@mui/material/TextField';
 import axios from 'axios';
 import uuid from "react-uuid";
+import { Navigate } from "react-router-dom";
 
 
 
@@ -111,7 +112,8 @@ function CreateRecipe()
             });
 
         alert(`Your recipe ${name} has been created!!!`);
-        window.location.replace("http://localhost:3000/main");
+        //window.location.replace("http://localhost:3000/main");
+        Navigate('/main');
         
     }
 

@@ -24,8 +24,15 @@ import axios from 'axios';
        
         axios.delete(`http://localhost:3000/main/${id}`)
         .then(
-            res => console.log("Deleted", res))
+            res => console.log("Deleted ", res))
             .catch(err => console.log(err));
+
+      // window.location.reload();    
+      axios.get(url).then(res => {
+        const items = res.data;
+        setFoodRecipe((items));   
+        console.log(items);       
+    })
 
     }
 
@@ -38,10 +45,10 @@ import axios from 'axios';
                     <h2>{d.name}</h2>
                     <h5>Ingredients</h5>
                     <ul> {d.ingredient.map((y) =>(<li>{y.value}</li> ))}</ul>
-                    <h7 className={classes.directions}>Directions</h7>
+                    <h5 className={classes.directions}>Directions</h5>
                     <ol>{d.directions.map((u) => <li>{u.value}</li>)}</ol>
                     <img src={`./RecipeImages/${d.recipeImage}`}/>
-                    <button onClick={deleteRecipe(d._id)}>Delete</button>
+                    <button type="submit" onClick={() => deleteRecipe(d._id)}>Delete</button>
                 </div>
             ));
 

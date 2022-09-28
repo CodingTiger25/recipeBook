@@ -6,7 +6,7 @@ import AddButton from '@mui/icons-material/Add';
 import TextField from '@mui/material/TextField';
 import axios from 'axios';
 import uuid from "react-uuid";
-import { Navigate } from "react-router-dom";
+//import { Navigate } from "react-router-dom";
 
 
 
@@ -65,8 +65,8 @@ function CreateRecipe()
     }
 
     
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const handleSubmit = (event) => {
+        event.preventDefault();
 
         //Setting the ingredients
         for(var i in inputList)
@@ -105,15 +105,15 @@ function CreateRecipe()
             directions: steps
         }*/
         
-        axios.post('http://localhost:3000/create', /*newRecipe*/formData)
+        axios.post('http://localhost:3000/create', formData)
             .then(res => console.log("Axios post"))
             .catch((err)=> {
-                console.log("Error")
+                console.log(console.error);
             });
 
         alert(`Your recipe ${name} has been created!!!`);
-        //window.location.replace("http://localhost:3000/main");
-        Navigate('/main');
+        window.location.replace("/main");
+        //Navigate('/main');
         
     }
 
@@ -179,7 +179,7 @@ function CreateRecipe()
                 </div>
 
                 <div>
-                      <button className={classes.submit}>Submit</button>
+                      <button type="submit" className={classes.submit}>Submit</button>
                 </div>         
             </form>
         </div>

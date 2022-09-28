@@ -20,26 +20,19 @@ import axios from 'axios';
         })
     }, [])
 
-    const deleteRecipe = (id) => {
+    const deleteRecipe = (id, e) => {
        
+        e.preventDefault();
+
         axios.delete(`http://localhost:3000/main/${id}`)
         .then(
-            res => console.log("Deleted ", res))
-            .catch(err => console.log(err));
-
-      // window.location.reload();    
-      axios.get(url).then(res => {
-        const items = res.data;
-        setFoodRecipe((items));   
-        console.log(items);       
-    })
-
+            res => {console.log("Deleted ", res); 
+                    window.location.reload()})
+            .catch(err => console.log("Deleted " + console.error));         
     }
 
     function displayItems(list) {
 
-
- 
             return list.map((d)  => (
                 <div key={d._id}>
                     <h2>{d.name}</h2>
@@ -48,7 +41,7 @@ import axios from 'axios';
                     <h5 className={classes.directions}>Directions</h5>
                     <ol>{d.directions.map((u) => <li>{u.value}</li>)}</ol>
                     <img src={`./RecipeImages/${d.recipeImage}`}/>
-                    <button type="submit" onClick={() => deleteRecipe(d._id)}>Delete</button>
+                    <button type="submit" onClick={(e) => deleteRecipe(d._id, e)}>Delete</button>
                 </div>
             ));
 

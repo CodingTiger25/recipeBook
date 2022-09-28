@@ -34,7 +34,7 @@ app.use(function (req, res, next) {
 
 
 //Request add new recipe
-app.post('/create', upload.single('recipeImage'), async (req,res) => {
+app.post('http://localhost:3000/create', upload.single('recipeImage'), async (req,res) => {
     
     console.log('The name', req.body.name);
     console.log('The ingredient', req.body.ingredient);
@@ -46,7 +46,7 @@ app.post('/create', upload.single('recipeImage'), async (req,res) => {
 
     var foodPic =  req.file.originalname;
 
-    const newRecipe = new RecipeList();
+    const newRecipe = await new RecipeList();
 
     console.log("From post", data, " Steps: ", steps);
 
@@ -67,7 +67,7 @@ app.post('/create', upload.single('recipeImage'), async (req,res) => {
 
  app.get('/main', async (req,res) => {
     const recipes = await RecipeList.find({});
-    //res.send(recipes);
+    res.send(recipes);
 });
 
 app.get('/main/:id', async (req,res) => {
@@ -77,7 +77,7 @@ app.get('/main/:id', async (req,res) => {
 }) 
 
 app.delete(`/main/:id`, async (req,res) => {
-    const {id} = req.params;
+    //const {id} = req.params;
 
     
         RecipeList.remove({_id:(req.params.id)})

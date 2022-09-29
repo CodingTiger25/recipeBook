@@ -31,6 +31,11 @@ import axios from 'axios';
             .catch(err => console.log("Deleted " + console.error));         
     }
 
+    const editRecipe = (id) => {
+
+        
+    }
+
     function displayItems(list) {
 
             return list.map((d)  => (
@@ -41,6 +46,7 @@ import axios from 'axios';
                     <h5 className={classes.directions}>Directions</h5>
                     <ol>{d.directions.map((u) => <li>{u.value}</li>)}</ol>
                     <img src={`./RecipeImages/${d.recipeImage}`}/>
+                    < Link to = {`/update/${d._id}`}>Edit</Link>
                     <button type="submit" onClick={(e) => deleteRecipe(d._id, e)}>Delete</button>
                 </div>
             ));

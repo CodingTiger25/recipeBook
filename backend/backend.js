@@ -34,7 +34,7 @@ app.use(function (req, res, next) {
 
 
 //Request add new recipe
-app.post('http://localhost:3000/create', upload.single('recipeImage'), async (req,res) => {
+app.post('/create', upload.single('recipeImage'), async (req,res) => {
     
     console.log('The name', req.body.name);
     console.log('The ingredient', req.body.ingredient);
@@ -58,11 +58,25 @@ app.post('http://localhost:3000/create', upload.single('recipeImage'), async (re
         newRecipe.save()
         .then(newRecipe =>{
             console.log(newRecipe);
-        }) 
+        })
+        
 })
 
 
+app.put('/update/:id', async (req,res) => {
 
+
+    const id = req.body.id;
+
+    try
+    {
+        await RecipeList.findById()
+    } catch(err)
+    {
+        console.log(err);
+    }
+
+})
 
 
  app.get('/main', async (req,res) => {
@@ -70,7 +84,7 @@ app.post('http://localhost:3000/create', upload.single('recipeImage'), async (re
     res.send(recipes);
 });
 
-app.get('/main/:id', async (req,res) => {
+app.get('/update/:id', async (req,res) => {
     const {id} = req.params;
     const recipe = await RecipeList.findById(id);
     res.send(recipe);     
@@ -80,7 +94,7 @@ app.delete(`/main/:id`, async (req,res) => {
     //const {id} = req.params;
 
     
-        RecipeList.remove({_id:(req.params.id)})
+        RecipeList.deleteOne({_id:(req.params.id)})
         .then(result => {res.status(200).json(result)})
         .catch(err => {
             res.status(500).json({error: 'Could not delete recipe'})

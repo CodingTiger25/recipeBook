@@ -5,9 +5,9 @@ const mongoose = require('mongoose');
 const recipeSchema = new mongoose.Schema({
     name: String,
 
-    ingredient: Object,
+    ingredient: String,
 
-    directions: Object,
+    directions: String,
 
     recipeImage: String,
 

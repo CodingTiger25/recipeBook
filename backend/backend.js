@@ -39,20 +39,21 @@ app.post('/create', upload.single('recipeImage'), async (req,res) => {
     console.log('The name', req.body.name);
     console.log('The ingredient', req.body.ingredient);
     console.log('The steps: ', req.body.directions);
+   // console.log('The file: ', req.file.filename);
 
-    var data = JSON.parse(req.body.ingredient);
+    /*var data = JSON.parse(req.body.ingredient);
 
-    var steps = JSON.parse(req.body.directions);
+    var steps = JSON.parse(req.body.directions);*/
 
     var foodPic =  req.file.originalname;
 
     const newRecipe = await new RecipeList();
 
-    console.log("From post", data, " Steps: ", steps);
+   
 
     newRecipe.name = req.body.name;
-    newRecipe.ingredient = data;  
-    newRecipe.directions = steps;
+    newRecipe.ingredient = req.body.ingredient;  
+    newRecipe.directions = req.body.directions;
     newRecipe.recipeImage = foodPic;
 
         newRecipe.save()
@@ -70,7 +71,15 @@ app.put('/update/:id', async (req,res) => {
 
     try
     {
-        await RecipeList.findById()
+        await RecipeList.findByIdAndUpdate(req.params.id, {
+            
+
+                name: req.body.name,
+                ingredient: req.body.ingredient,
+                directions: req.body.directions,
+                recipeImage: req.file.originalname    
+            
+        })
     } catch(err)
     {
         console.log(err);

@@ -16,7 +16,7 @@ import axios from 'axios';
         axios.get(url).then(res => {
             const items = res.data;
             setFoodRecipe((items));   
-            console.log(items);       
+                
         })
     }, [])
 
@@ -31,10 +31,7 @@ import axios from 'axios';
             .catch(err => console.log("Deleted " + console.error));         
     }
 
-    const editRecipe = (id) => {
-
-        
-    }
+    
 
     function displayItems(list) {
 
@@ -42,9 +39,9 @@ import axios from 'axios';
                 <div key={d._id}>
                     <h2>{d.name}</h2>
                     <h5>Ingredients</h5>
-                    <ul> {d.ingredient.map((y) =>(<li>{y.value}</li> ))}</ul>
+                    <ul> {d.ingredient}</ul>
                     <h5 className={classes.directions}>Directions</h5>
-                    <ol>{d.directions.map((u) => <li>{u.value}</li>)}</ol>
+                    <ol>{d.directions}</ol>
                     <img src={`./RecipeImages/${d.recipeImage}`}/>
                     < Link to = {`/update/${d._id}`}>Edit</Link>
                     <button type="submit" onClick={(e) => deleteRecipe(d._id, e)}>Delete</button>

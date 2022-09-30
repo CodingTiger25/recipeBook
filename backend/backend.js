@@ -64,14 +64,14 @@ app.post('/create', upload.single('recipeImage'), async (req,res) => {
 })
 
 
-app.put('/update/:id', async (req,res) => {
+app.put('/update/:id', upload.single('recipeImage'), async (req,res) => {
 
 
-    const id = req.body.id;
+    const {id} = req.params;
 
     try
     {
-        await RecipeList.findByIdAndUpdate(req.params.id, {
+        await RecipeList.findByIdAndUpdate(id, {
             
 
                 name: req.body.name,

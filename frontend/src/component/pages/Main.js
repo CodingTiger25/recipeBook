@@ -39,7 +39,10 @@ import axios from 'axios';
                 <div key={d._id}>
                     <h2>{d.name}</h2>
                     <h5>Ingredients</h5>
-                    <ul> {d.ingredient}</ul>
+                    <div className={classes.foodIng}>                      
+                        <p> {d.ingredient}</p>
+                    </div>
+                    
                     <h5 className={classes.directions}>Directions</h5>
                     <ol>{d.directions}</ol>
                     <img src={`./RecipeImages/${d.recipeImage}`}/>

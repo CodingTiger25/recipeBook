@@ -32,4 +32,5 @@
     display: block;
     font-size: 1.9rem;
     text-align: left;
+    white-space:  pre-line;
 }

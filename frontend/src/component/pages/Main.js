@@ -47,7 +47,7 @@ import axios from 'axios';
                     <ol>{d.directions}</ol>
                     <img src={`./RecipeImages/${d.recipeImage}`}/>
                     < Link to = {`/update/${d._id}`}>Edit</Link>
-                    <button type="submit" onClick={(e) => deleteRecipe(d._id, e)}>Delete</button>
+                    <button type="submit" onClick={(e) => {if(window.confirm(`Are you sure you want to delete your ${d.name} recipe?`)) deleteRecipe(d._id, e)}}>Delete</button>
                 </div>
             ));
 

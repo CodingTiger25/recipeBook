@@ -39,11 +39,6 @@ app.post('/create', upload.single('recipeImage'), async (req,res) => {
     console.log('The name', req.body.name);
     console.log('The ingredient', req.body.ingredient);
     console.log('The steps: ', req.body.directions);
-   // console.log('The file: ', req.file.filename);
-
-    /*var data = JSON.parse(req.body.ingredient);
-
-    var steps = JSON.parse(req.body.directions);*/
 
     var foodPic =  req.file.originalname;
 
@@ -77,7 +72,7 @@ app.put('/update/:id', upload.single('recipeImage'), async (req,res) => {
                 name: req.body.name,
                 ingredient: req.body.ingredient,
                 directions: req.body.directions,
-                recipeImage: req.file.originalname    
+                recipeImage: req.file.originalname,
             
         })
     } catch(err)

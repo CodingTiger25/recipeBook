@@ -25,7 +25,7 @@ function CreateRecipe()
 
        
         
-
+        divide();
         const formData = new FormData();
 
         formData.append("name",name);
@@ -44,6 +44,14 @@ function CreateRecipe()
         window.location.replace("/main");      
     }
 
+   function divide()
+   {
+        var txt;
+        txt = theIngredients;
+        var text = txt.split(" ");
+        var str = text.join(' </br>');
+        setTheIngredients(document.write(str));
+   }
     return (
         <div className={classes.create}>
             <h2 className={classes.title}>CREATE THE RECIPE!</h2>
@@ -59,7 +67,7 @@ function CreateRecipe()
                 <label className={classes.recipeName}>
                     Ingredient:   
                 </label>
-                <textarea type='text' onChange={(e) => setTheIngredients(e.target.value)}>
+                <textarea type='text' onChange={(e) => setTheIngredients(e.target.value)} id="a">
 
                 </textarea>
 

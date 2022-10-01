@@ -36,12 +36,21 @@ function EditRecipe()
         setFileData(e.target.files[0]);
     }
 
-    
+    function divide()
+        {
+            var txt;
+            txt = theIngredients;
+            var text = txt.split(" ");
+            var str = text.join(' </br>');
+            setTheIngredients(document.write(str));
+        }
+
     const handleSubmit = (event) => {
         event.preventDefault();
 
        
         
+        divide();
 
         const formData = new FormData();
 
@@ -51,13 +60,13 @@ function EditRecipe()
         formData.append("recipeImage",fileData);
 
        
-        axios.put(`http://localhost:3000/update/${id}`,
-        {
+        axios.put(`http://localhost:3000/update/${id}`, formData);
+        /*{
                 name:name,
                 ingredient:theIngredients,
                 directions:theDirections,
                 recipeImage: fileData
-        });
+        });*/
 
         alert(`Your recipe ${name} has been updated!!!`);
         window.location.replace("/main");      
